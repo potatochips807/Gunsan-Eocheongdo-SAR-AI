@@ -1,0 +1,5 @@
+﻿evaluated_at,model,evaluated_images,map_50_95,map_50,mar_100,split
+2026-11-03T22:39:30,faster_rcnn_20images.pth,75,0.002,0.0102,0.1622,val
+2026-11-03T23:31:49,faster_rcnn_full_latest.pth,75,0.4184,0.774,0.4955,val
+2026-11-03T23:32:38,faster_rcnn_full_latest.pth,75,0.4184,0.774,0.4955,val
+2026-11-03T23:33:09,faster_rcnn_full_latest.pth,75,0.4184,0.774,0.4955,val
