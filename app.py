@@ -1,4 +1,4 @@
-﻿import csv
+import csv
 import io
 import hashlib
 
@@ -14,9 +14,10 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("🌊 Ocean IW Detector")
-st.subheader("SAR 위성영상을 활용한 해양 내부파 탐지 시스템")
-st.info("현재는 수동 표시 기능입니다. AI 자동 탐지는 아직 구현되지 않았습니다.")
+st.title("군산·어청도·서해 해양 내부파 자동 탐지 시스템")
+st.subheader("Sentinel-1 SAR / Faster R-CNN")
+st.info("연구 해역: 군산 앞바다 · 어청도 · 서해 | 2014~2023")
+st.success("AI 자동 탐지는 왼쪽 메뉴에서 이용하세요.")
 
 
 def normalize_image(arr):
