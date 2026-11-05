@@ -11,6 +11,7 @@ region_file = Path("data/westsea_regions.csv")
 summary_file = Path("results/final_report/final_detection_summary.csv")
 candidate_file = Path("results/final_report/final_ai_candidates.csv")
 preview_file = Path("results/region_crops/gunsan_20170507_web.jpg")
+detection_file = Path("results/region_crops/gunsan_ai_candidates_web.jpg")
 
 if region_file.exists():
     with region_file.open(encoding="utf-8-sig", newline="") as f:
@@ -28,8 +29,22 @@ region = st.selectbox("연구 해역 선택", ["Gunsan", "Eocheongdo", "WestSea"
 if region == "Gunsan":
     st.subheader("군산 SAR 및 AI 탐지 결과")
 
-    if preview_file.exists():
-        st.image(str(preview_file), caption="군산 SAR 영상 - 2017-05-07")
+
+    st.subheader("SAR / AI Detection Comparison")
+
+    left, right = st.columns(2)
+
+    with left:
+        if preview_file.exists():
+            st.image(str(preview_file), caption="Original SAR", use_container_width=True)
+
+    with right:
+        if detection_file.exists():
+            st.image(str(detection_file), caption="AI Detection Candidates", use_container_width=True)
+        else:
+            st.warning("AI detection visualization not found.")
+
+    st.caption("Detection boxes represent unverified AI candidates.")
 
     if summary_file.exists():
         with summary_file.open(encoding="utf-8-sig", newline="") as f:
