@@ -8,3 +8,4 @@ pandas==3.1.0
 Pillow==13.0.0
 matplotlib==3.11.2
 tifffile==2026.10.15
+streamlit-image-coordinates
