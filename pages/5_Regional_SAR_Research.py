@@ -58,7 +58,108 @@ if region == "Gunsan":
     if candidate_file.exists():
         with candidate_file.open(encoding="utf-8-sig", newline="") as f:
             candidates = list(csv.DictReader(f))
-        st.dataframe(candidates, use_container_width=True)
+
+        st.subheader("AI confidence filter")
+
+        threshold = st.slider(
+            "Minimum AI confidence",
+            min_value=0.0,
+            max_value=1.0,
+            value=0.5,
+            step=0.05
+        )
+
+        filtered = [
+            c for c in candidates
+            if float(c["score"]) >= threshold
+        ]
+
+        st.metric("Filtered candidates", len(filtered))
+
+        st.dataframe(
+            filtered,
+            use_container_width=True
+        )
+
+        st.subheader("Candidate detail viewer")
+
+        if filtered:
+            import re
+            from PIL import Image, ImageDraw
+
+            ids = [c["candidate_id"] for c in filtered]
+            selected_id = st.selectbox("Select candidate", ids)
+
+            selected = next(
+                c for c in filtered
+                if c["candidate_id"] == selected_id
+            )
+
+            match = re.search(
+                r"_x(\d+)_y(\d+)",
+                selected["tile"]
+            )
+
+            if match:
+                tile_x = int(match.group(1))
+                tile_y = int(match.group(2))
+
+                x1 = tile_x + float(selected["x1"])
+                y1 = tile_y + float(selected["y1"])
+                x2 = tile_x + float(selected["x2"])
+                y2 = tile_y + float(selected["y2"])
+
+                raw_path = Path(
+                    "results/region_crops/gunsan_20170507_web.jpg"
+                )
+
+                if raw_path.exists():
+                    with Image.open(raw_path) as im:
+                        original = im.convert("RGB")
+
+                    scale_x = original.width / 7206
+                    scale_y = original.height / 6491
+
+                    x1 = int(x1 * scale_x)
+                    y1 = int(y1 * scale_y)
+                    x2 = int(x2 * scale_x)
+                    y2 = int(y2 * scale_y)
+
+                    padding = 40
+
+                    crop_box = (
+                        max(0, x1 - padding),
+                        max(0, y1 - padding),
+                        min(original.width, x2 + padding),
+                        min(original.height, y2 + padding)
+                    )
+
+                    cropped = original.crop(crop_box)
+
+                    draw = ImageDraw.Draw(cropped)
+                    draw.rectangle(
+                        [
+                            (x1 - crop_box[0], y1 - crop_box[1]),
+                            (x2 - crop_box[0], y2 - crop_box[1])
+                        ],
+                        outline="red",
+                        width=3
+                    )
+
+                    st.image(
+                        cropped,
+                        caption=selected_id,
+                        use_container_width=True
+                    )
+
+                    st.metric(
+                        "AI confidence",
+                        round(float(selected["score"]), 4)
+                    )
+        else:
+            st.info("No candidates match this threshold.")
+
+
 
 else:
     st.subheader(region)
