@@ -3,8 +3,8 @@ import csv
 from pathlib import Path
 import streamlit as st
 
-st.set_page_config(page_title="Regional SAR Research", page_icon="??", layout="wide")
-st.title("Regional SAR Research")
+st.set_page_config(page_title="지역별 SAR 연구 결과", page_icon="??", layout="wide")
+st.title("지역별 SAR 연구 결과")
 st.caption("Sentinel-1 SAR | 2014?2023 | Faster R-CNN")
 
 region_file = Path("data/westsea_regions.csv")
@@ -23,22 +23,22 @@ if region_file.exists():
 else:
     st.warning("Region classification data not found.")
 
-region = st.selectbox("Select region", ["Gunsan", "Eocheongdo", "WestSea"])
+region = st.selectbox("연구 해역 선택", ["Gunsan", "Eocheongdo", "WestSea"])
 
 if region == "Gunsan":
-    st.subheader("Gunsan SAR and AI Detection Results")
+    st.subheader("군산 SAR 및 AI 탐지 결과")
 
     if preview_file.exists():
-        st.image(str(preview_file), caption="Gunsan SAR - 2017-05-07")
+        st.image(str(preview_file), caption="군산 SAR 영상 - 2017-05-07")
 
     if summary_file.exists():
         with summary_file.open(encoding="utf-8-sig", newline="") as f:
             summary = next(csv.DictReader(f), None)
 
         if summary:
-            st.metric("AI candidates", summary.get("candidate_count", "-"))
-            st.metric("Tiles with candidates", summary.get("unique_tiles", "-"))
-            st.warning("AI candidates are not confirmed internal waves.")
+            st.metric("AI 탐지 후보", summary.get("candidate_count", "-"))
+            st.metric("탐지 후보가 있는 타일", summary.get("unique_tiles", "-"))
+            st.warning("AI 탐지 후보 are not confirmed internal waves.")
 
     if candidate_file.exists():
         with candidate_file.open(encoding="utf-8-sig", newline="") as f:
@@ -47,4 +47,4 @@ if region == "Gunsan":
 
 else:
     st.subheader(region)
-    st.info("SAR scene classification is available. AI detection results require verification.")
+    st.info("SAR 영상 분류 자료는 확보되었으나 AI 탐지 결과는 추가 검증이 필요합니다.")
