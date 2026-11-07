@@ -1,3 +1,4 @@
+import hashlib
 import io
 import os
 
@@ -19,6 +20,27 @@ st.title("SAR 해양 내부파 AI 자동 탐지")
 st.caption("Faster R-CNN 기반 내부파 후보 영역 탐지")
 
 MODEL_PATH = "results/models/faster_rcnn_full_latest.pth"
+
+# STEP_489_RUNTIME_DIAGNOSTIC
+if os.path.isfile(MODEL_PATH):
+    with open(MODEL_PATH, "rb") as f:
+        model_hash = hashlib.file_digest(
+            f, "sha256"
+        ).hexdigest()
+
+    st.caption(
+        "STEP_489 MODEL_SHA256: " + model_hash
+    )
+    st.caption(
+        "STEP_489 MODEL_SIZE: "
+        + str(os.path.getsize(MODEL_PATH))
+    )
+else:
+    st.error(
+        "STEP_489 MODEL_FILE_MISSING: "
+        + MODEL_PATH
+    )
+
 
 st.info(
     "Deployment diagnostic | "
@@ -67,6 +89,19 @@ threshold = st.slider(
 if uploaded is not None:
 
     image = Image.open(uploaded).convert("RGB")
+
+    uploaded.seek(0)
+    upload_hash = hashlib.sha256(
+        uploaded.getvalue()
+    ).hexdigest()
+
+    st.caption(
+        "STEP_489 UPLOAD_SHA256: " + upload_hash
+    )
+    st.caption(
+        "STEP_489 IMAGE_SIZE: " + str(image.size)
+    )
+
 
     st.image(image, caption="원본 SAR 영상", width="stretch")
 
@@ -135,6 +170,7 @@ if uploaded is not None:
                     "confidence": round(confidence, 4)
                 })
 
+        st.caption("STEP_489 AFTER_NMS: " + str(len(rows)))
         st.success(f"AI 탐지 완료: {len(rows)}개 후보")
 
         st.image(
