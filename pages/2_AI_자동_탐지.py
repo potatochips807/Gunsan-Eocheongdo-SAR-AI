@@ -75,7 +75,7 @@ st.info(
 )
 
 
-@st.cache_resource
+# STEP_499_MODEL_DIAGNOSTIC
 def load_model():
     torch.set_num_threads(2)
 
@@ -144,6 +144,32 @@ if uploaded is not None:
 
             with torch.inference_mode():
                 prediction = model([tensor])[0]
+
+                st.caption(
+                    "STEP_499 RAW_BOXES: "
+                    + str(len(prediction["boxes"]))
+                )
+
+                st.caption(
+                    "STEP_499 RAW_SCORES_GE_030: "
+                    + str(
+                        int(
+                            (
+                                prediction["scores"] >= 0.30
+                            ).sum().item()
+                        )
+                    )
+                )
+
+                st.caption(
+                    "STEP_499 MODEL_TRAINING: "
+                    + str(model.training)
+                )
+
+                st.caption(
+                    "STEP_499 TENSOR_SHAPE: "
+                    + str(tuple(tensor.shape))
+                )
 
             result = image.copy()
             draw = ImageDraw.Draw(result)
