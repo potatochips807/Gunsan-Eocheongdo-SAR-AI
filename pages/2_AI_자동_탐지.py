@@ -20,6 +20,14 @@ st.caption("Faster R-CNN 기반 내부파 후보 영역 탐지")
 
 MODEL_PATH = "results/models/faster_rcnn_full_latest.pth"
 
+st.info(
+    "Deployment diagnostic | "
+    "Model: faster_rcnn_full_latest.pth | "
+    "Post-NMS IoU: 0.30 | "
+    "Code version: STEP_486"
+)
+
+
 @st.cache_resource
 def load_model():
     torch.set_num_threads(2)
