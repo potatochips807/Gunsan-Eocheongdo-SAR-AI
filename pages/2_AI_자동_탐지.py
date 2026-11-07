@@ -75,8 +75,9 @@ st.info(
 )
 
 
-# STEP_499_MODEL_DIAGNOSTIC
-def load_model():
+# STEP_502_HASH_KEYED_CACHE
+@st.cache_resource
+def load_model(model_sha256):
     torch.set_num_threads(2)
 
     model = fasterrcnn_mobilenet_v3_large_320_fpn(
@@ -138,7 +139,7 @@ if uploaded is not None:
 
         with st.spinner("Faster R-CNN 분석 중..."):
 
-            model = load_model()
+            model = load_model(model_hash)
 
             tensor = to_tensor(image)
 
