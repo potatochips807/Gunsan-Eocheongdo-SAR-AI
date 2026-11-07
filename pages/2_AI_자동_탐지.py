@@ -1,4 +1,4 @@
-﻿import io
+import io
 import os
 
 import pandas as pd
@@ -8,6 +8,7 @@ import torch
 from PIL import Image, ImageDraw
 from torchvision.models.detection import fasterrcnn_mobilenet_v3_large_320_fpn
 from torchvision.transforms.functional import to_tensor
+from torchvision.ops import nms
 
 st.set_page_config(
     page_title="AI 내부파 자동 탐지",
@@ -17,7 +18,7 @@ st.set_page_config(
 st.title("SAR 해양 내부파 AI 자동 탐지")
 st.caption("Faster R-CNN 기반 내부파 후보 영역 탐지")
 
-MODEL_PATH = "results/models/faster_rcnn_20images.pth"
+MODEL_PATH = "results/models/faster_rcnn_full_latest.pth"
 
 @st.cache_resource
 def load_model():
@@ -81,10 +82,23 @@ if uploaded is not None:
 
             rows = []
 
-            for box, score in zip(
-                prediction["boxes"],
-                prediction["scores"]
-            ):
+            boxes = prediction["boxes"]
+            scores = prediction["scores"]
+
+            valid = scores >= threshold
+            boxes = boxes[valid]
+            scores = scores[valid]
+
+            if len(boxes) > 0:
+                keep = nms(
+                    boxes,
+                    scores,
+                    iou_threshold=0.30
+                )
+                boxes = boxes[keep]
+                scores = scores[keep]
+
+            for box, score in zip(boxes, scores):
 
                 confidence = float(score)
 
