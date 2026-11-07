@@ -25,25 +25,9 @@ MODEL_PATH = "results/models/faster_rcnn_full_latest.pth"
 import sys
 import torchvision
 
-st.caption(
-    "STEP_496 PYTHON: "
-    + sys.version.split()[0]
-)
 
-st.caption(
-    "STEP_496 TORCH: "
-    + torch.__version__
-)
 
-st.caption(
-    "STEP_496 TORCHVISION: "
-    + torchvision.__version__
-)
 
-st.caption(
-    "STEP_496 CUDA: "
-    + str(torch.cuda.is_available())
-)
 
 
 # STEP_489_RUNTIME_DIAGNOSTIC
@@ -53,13 +37,6 @@ if os.path.isfile(MODEL_PATH):
             f, "sha256"
         ).hexdigest()
 
-    st.caption(
-        "STEP_489 MODEL_SHA256: " + model_hash
-    )
-    st.caption(
-        "STEP_489 MODEL_SIZE: "
-        + str(os.path.getsize(MODEL_PATH))
-    )
 else:
     st.error(
         "STEP_489 MODEL_FILE_MISSING: "
@@ -67,12 +44,6 @@ else:
     )
 
 
-st.info(
-    "Deployment diagnostic | "
-    "Model: faster_rcnn_full_latest.pth | "
-    "Post-NMS IoU: 0.30 | "
-    "Code version: STEP_486"
-)
 
 
 # STEP_502_HASH_KEYED_CACHE
@@ -121,12 +92,6 @@ if uploaded is not None:
         uploaded.getvalue()
     ).hexdigest()
 
-    st.caption(
-        "STEP_489 UPLOAD_SHA256: " + upload_hash
-    )
-    st.caption(
-        "STEP_489 IMAGE_SIZE: " + str(image.size)
-    )
 
 
     st.image(image, caption="원본 SAR 영상", width="stretch")
@@ -146,31 +111,9 @@ if uploaded is not None:
             with torch.inference_mode():
                 prediction = model([tensor])[0]
 
-                st.caption(
-                    "STEP_499 RAW_BOXES: "
-                    + str(len(prediction["boxes"]))
-                )
 
-                st.caption(
-                    "STEP_499 RAW_SCORES_GE_030: "
-                    + str(
-                        int(
-                            (
-                                prediction["scores"] >= 0.30
-                            ).sum().item()
-                        )
-                    )
-                )
 
-                st.caption(
-                    "STEP_499 MODEL_TRAINING: "
-                    + str(model.training)
-                )
 
-                st.caption(
-                    "STEP_499 TENSOR_SHAPE: "
-                    + str(tuple(tensor.shape))
-                )
 
             result = image.copy()
             draw = ImageDraw.Draw(result)
@@ -222,7 +165,6 @@ if uploaded is not None:
                     "confidence": round(confidence, 4)
                 })
 
-        st.caption("STEP_489 AFTER_NMS: " + str(len(rows)))
         st.success(f"AI 탐지 완료: {len(rows)}개 후보")
 
         st.image(
