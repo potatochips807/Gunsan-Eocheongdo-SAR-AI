@@ -21,6 +21,31 @@ st.caption("Faster R-CNN 기반 내부파 후보 영역 탐지")
 
 MODEL_PATH = "results/models/faster_rcnn_full_latest.pth"
 
+# STEP_496_ENVIRONMENT
+import sys
+import torchvision
+
+st.caption(
+    "STEP_496 PYTHON: "
+    + sys.version.split()[0]
+)
+
+st.caption(
+    "STEP_496 TORCH: "
+    + torch.__version__
+)
+
+st.caption(
+    "STEP_496 TORCHVISION: "
+    + torchvision.__version__
+)
+
+st.caption(
+    "STEP_496 CUDA: "
+    + str(torch.cuda.is_available())
+)
+
+
 # STEP_489_RUNTIME_DIAGNOSTIC
 if os.path.isfile(MODEL_PATH):
     with open(MODEL_PATH, "rb") as f:
