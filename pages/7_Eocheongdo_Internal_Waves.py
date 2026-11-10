@@ -180,3 +180,65 @@ st.caption(
     "\ubd84\uc11d\ub9cc\uc73c\ub85c\ub294 "
     "\ud574\uc591 \ub0b4\ubd80\ud30c\ub97c \ud655\uc815\ud560 \uc218 \uc5c6\uc2b5\ub2c8\ub2e4."
 )
+
+
+# STEP 723: ORIENTATION COMPARISON
+
+st.divider()
+
+st.subheader(
+    "5. \ud6c4\ubcf4 A\u00b7C \uc904\ubb34\ub2ac "
+    "\ubc29\ud5a5\uc131 \ube44\uad50"
+)
+
+comparison_image = (
+    image_root
+    / "step721_2022"
+    / "candidate_A_C_orientation_comparison.png"
+)
+
+comparison_df = pd.DataFrame([
+    {
+        "\ud6c4\ubcf4": "A",
+        "\ubc29\ud5a5 \uc9d1\uc911\ub3c4": 0.9434,
+        "\uad6d\uc18c \ubc29\ud5a5\uc131 \uc77c\uad00\uc131": 0.3239,
+        "\ud3c9\uade0 \ubc29\ud5a5 \ud3b8\ucc28(\ub3c4)": 8.32,
+    },
+    {
+        "\ud6c4\ubcf4": "C",
+        "\ubc29\ud5a5 \uc9d1\uc911\ub3c4": 0.8380,
+        "\uad6d\uc18c \ubc29\ud5a5\uc131 \uc77c\uad00\uc131": 0.1909,
+        "\ud3c9\uade0 \ubc29\ud5a5 \ud3b8\ucc28(\ub3c4)": 13.36,
+    },
+])
+
+st.dataframe(
+    comparison_df,
+    hide_index=True,
+    width="stretch"
+)
+
+if comparison_image.exists():
+    st.image(
+        str(comparison_image),
+        caption=(
+            "2022 Sentinel-1 SAR | "
+            "Candidate A vs C | UNCONFIRMED"
+        ),
+        width="stretch"
+    )
+else:
+    st.warning(
+        "\ubc29\ud5a5\uc131 \ube44\uad50 "
+        "\uadf8\ub798\ud504 \ud30c\uc77c\uc774 \uc5c6\uc2b5\ub2c8\ub2e4."
+    )
+
+st.info(
+    "\ud6c4\ubcf4 A\ub294 C\ubcf4\ub2e4 "
+    "\ubc29\ud5a5 \uc9d1\uc911\ub3c4\uc640 "
+    "\uad6d\uc18c \ubc29\ud5a5\uc131 \uc77c\uad00\uc131\uc774 "
+    "\ub192\uc2b5\ub2c8\ub2e4. "
+    "\ub2e4\ub9cc \ub450 \ud6c4\ubcf4 \ubaa8\ub450 "
+    "\ud574\uc591 \ub0b4\ubd80\ud30c\ub85c "
+    "\ud655\uc815\ub418\uc9c0 \uc54a\uc558\uc2b5\ub2c8\ub2e4."
+)
