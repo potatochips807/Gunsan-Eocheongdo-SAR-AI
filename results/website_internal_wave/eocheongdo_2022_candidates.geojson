@@ -1,0 +1,80 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.773228,
+          36.224873
+        ]
+      },
+      "properties": {
+        "id": "CANDIDATE_A",
+        "region": "Eocheongdo",
+        "scene_year": 2022,
+        "sensor": "Sentinel-1 SAR",
+        "polarization": "VV",
+        "status": "UNCONFIRMED_CANDIDATE",
+        "analysis_stage": "PATTERN_ANALYZED",
+        "peak_count": 4,
+        "estimated_profile_spacing_m": 893.33,
+        "mean_local_coherence": 0.4651,
+        "temporal_texture_correlation": -0.0291,
+        "internal_wave_confirmed": false,
+        "note": "SAR stripe-like structure only. Physical validation is required."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.883109,
+          36.202556
+        ]
+      },
+      "properties": {
+        "id": "CANDIDATE_B",
+        "region": "Eocheongdo",
+        "scene_year": 2022,
+        "sensor": "Sentinel-1 SAR",
+        "polarization": "VV",
+        "status": "UNCONFIRMED_CANDIDATE",
+        "analysis_stage": "LOCATION_ONLY",
+        "peak_count": null,
+        "estimated_profile_spacing_m": null,
+        "mean_local_coherence": null,
+        "temporal_texture_correlation": null,
+        "internal_wave_confirmed": false,
+        "note": "SAR stripe-like structure only. Physical validation is required."
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          125.791704,
+          36.099211
+        ]
+      },
+      "properties": {
+        "id": "CANDIDATE_C",
+        "region": "Eocheongdo",
+        "scene_year": 2022,
+        "sensor": "Sentinel-1 SAR",
+        "polarization": "VV",
+        "status": "UNCONFIRMED_CANDIDATE",
+        "analysis_stage": "PATTERN_ANALYZED",
+        "peak_count": 7,
+        "estimated_profile_spacing_m": 593.33,
+        "mean_local_coherence": 0.3442,
+        "temporal_texture_correlation": null,
+        "internal_wave_confirmed": false,
+        "note": "SAR stripe-like structure only. Physical validation is required."
+      }
+    }
+  ]
+}
